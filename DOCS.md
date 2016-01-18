@@ -4,7 +4,8 @@ The following parameters are used to configure this plugin:
 
 * `registry` - authenticates to this registry (defaults to `gcr.io`)
 * `token` - json token
-* `repo` - repository name for the image
+* `repo` - repository name for the image - must match the pattern `GOOGLE-PROJECT-ID/foo`
+* `file` - dockerfile to be used, defaults to Dockerfile
 * `tag` - repository tag for the image (defaults to `latest`)
 * `storage_driver` - use `aufs`, `devicemapper`, `btrfs` or `overlay` driver
 
@@ -13,7 +14,7 @@ Sample configuration:
 ```yaml
 publish:
   gcr:
-    repo: foo/bar
+    repo: google-project-id/foo
     token: >
       {
         "private_key_id": "...",
@@ -42,6 +43,25 @@ publish:
         "client_id": "...",
         "type": "..."
       }
+```
+
+Sample configuration using conditions. Publish only during tag events:
+
+```yaml
+publish:
+  gcr:
+    repo: google-project-id/foo
+    token: >
+      {
+        "private_key_id": "...",
+        "private_key": "...",
+        "client_email": "...",
+        "client_id": "...",
+        "type": "..."
+      }
+    file: Dockerfile.production
+    when:
+      event: tag
 ```
 
 ## JSON Token
@@ -119,15 +139,15 @@ This error occurs when trying to use the `overlay` storage Driver but overlay is
 
 ```
 level=error msg="'overlay' not found as a supported filesystem on this host.
-Please ensure kernel is new enough and has overlay support loaded." 
+Please ensure kernel is new enough and has overlay support loaded."
 level=fatal msg="Error starting daemon: error initializing graphdriver: driver not supported"
 ```
 
 This error occurs when using CentOS or RedHat which default to the `devicemapper` storage driver:
 
 ```
-level=error msg="There are no more loopback devices available." 
-level=fatal msg="Error starting daemon: error initializing graphdriver: loopback mounting failed" 
+level=error msg="There are no more loopback devices available."
+level=fatal msg="Error starting daemon: error initializing graphdriver: loopback mounting failed"
 Cannot connect to the Docker daemon. Is 'docker -d' running on this host?
 ```
 
