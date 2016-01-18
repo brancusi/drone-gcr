@@ -30,7 +30,7 @@ Sample configuration using multiple tags:
 ```
 publish:
   gcr:
-    repo: google-project-id/bar
+    repo: google-project-id/foo
     tag:
       - latest
       - "1.0.1"
@@ -124,6 +124,8 @@ publish:
     environment:
       - DOCKER_LAUNCH_DEBUG=true
 ```
+
+If you are using [secrets](http://readme.drone.io/usage/secrets/), make sure to run `drone secure ...` after any changes to either the secrets.yml or drone.yml. If not, publish will not start.
 
 ## Known Issues
 
