@@ -125,8 +125,6 @@ publish:
       - DOCKER_LAUNCH_DEBUG=true
 ```
 
-If you are using [secrets](http://readme.drone.io/usage/secrets/), make sure to run `drone secure ...` after any changes to either the secrets.yml or drone.yml. If not, publish will not start.
-
 ## Known Issues
 
 There are known issues when attempting to run this plugin on CentOS, RedHat, and Linux installations that do not have a supported storage driver installed. You can check by running `docker info | grep 'Storage Driver:'` on your host machine. If the storage driver is not `aufs` or `overlay` you will need to re-configure your host machine.
