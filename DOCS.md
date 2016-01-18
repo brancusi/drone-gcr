@@ -30,7 +30,7 @@ Sample configuration using multiple tags:
 ```
 publish:
   gcr:
-    repo: foo/bar
+    repo: google-project-id/bar
     tag:
       - latest
       - "1.0.1"
